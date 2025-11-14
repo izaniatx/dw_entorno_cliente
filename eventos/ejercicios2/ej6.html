@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventana con actividad</title>
+</head>
+<body>
+    <div style="text-align: center; margin-top: 20px;">
+        <button onclick="abrirVentana()">Abrir ventana</button>
+    </div>
+    <script>
+        let nuevaVentana;
+
+        function abrirVentana() {
+            nuevaVentana = window.open('', '', 'width=200,height=200');
+            nuevaVentana.document.write('<h1>¡Ventana abierta!</h1>');
+            nuevaVentana.document.write('<p>Esperando 5 segundos sin actividad...</p>');
+
+            let temporizador = setTimeout(function() {
+                nuevaVentana.close();
+            }, 5000);
+
+            function resetearTemporizador() {
+                clearTimeout(temporizador);
+                temporizador = setTimeout(function() {
+                    nuevaVentana.close();
+                }, 5000);
+            }
+
+            nuevaVentana.addEventListener('mousemove', resetearTemporizador);
+            nuevaVentana.addEventListener('click', resetearTemporizador);
+            document.addEventListener('mousemove', resetearTemporizador);
+            document.addEventListener('click', resetearTemporizador);
+        }
+    </script>
+</body>
+</html>

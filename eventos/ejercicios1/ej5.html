@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Lista de enlaces</h2>
+
+    <ul>
+    <li><a href="https://www.google.com">Google</a></li>
+    <li><a href="https://www.wikipedia.org">Wikipedia</a></li>
+    <li><a href="https://www.chatgpt.com">ChatGPT</a></li>
+    <li><a href="https://www.github.com">GitHub</a></li>
+    </ul>
+
+    <textarea id="editor" readonly></textarea>
+
+    <script>
+    const enlaces = document.querySelectorAll("a");
+    const editor = document.getElementById("editor");
+
+    enlaces.forEach(enlace => {
+        enlace.addEventListener("mouseover", function() {
+            editor.value = this.href; 
+        });
+
+        enlace.addEventListener("mouseout", function() {
+            editor.value = "";
+        });
+    });
+</script>
+</body>
+</html>

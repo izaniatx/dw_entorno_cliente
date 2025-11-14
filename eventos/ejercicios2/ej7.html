@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fondo Cambiante</title>
+</head>
+<body>
+    <script>
+        document.addEventListener('mousemove', function(event) {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            
+            const distX = Math.min(event.clientX, width - event.clientX);
+            const distY = Math.min(event.clientY, height - event.clientY);
+            
+            const percentageX = (distX / width) * 100;
+            const percentageY = (distY / height) * 100;
+
+            const minDistance = Math.min(percentageX, percentageY);
+
+            if (minDistance < 10) {
+                document.body.style.backgroundColor = 'red';
+            } else if (minDistance >= 10 && minDistance < 20) {
+                document.body.style.backgroundColor = 'yellow';
+            } else {
+                document.body.style.backgroundColor = 'green';
+            }
+        });
+    </script>
+</body>
+</html>

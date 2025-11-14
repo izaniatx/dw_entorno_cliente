@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desplazar cuadrado con mouse</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        #cuadrado {
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+            position: absolute;
+        }
+    </style>
+    
+</head>
+<body>
+    <div id="cuadrado"></div>
+
+    <script>
+        let x = window.innerWidth / 2 - 50;
+        let y = window.innerHeight / 2 - 50;
+        let moviendose = false;
+
+        const cuadrado = document.getElementById("cuadrado");
+
+        cuadrado.style.left = `${x}px`;
+        cuadrado.style.top = `${y}px`;
+
+        cuadrado.addEventListener("mousedown", function(evento) {
+            moviendose = true;
+            cuadrado.style.backgroundColor = "blue";
+            const desplazamientoX = evento.clientX - x;
+            const desplazamientoY = evento.clientY - y;
+
+            function mover(evento) {
+                if (moviendose) {
+                    x = evento.clientX - desplazamientoX;
+                    y = evento.clientY - desplazamientoY;
+                    cuadrado.style.left = `${x}px`;
+                    cuadrado.style.top = `${y}px`;
+                }
+            }
+
+            function parar() {
+                moviendose = false;
+                cuadrado.style.backgroundColor = "yellow";
+                document.removeEventListener("mousemove", mover);
+                document.removeEventListener("mouseup", parar);
+            }
+
+            document.addEventListener("mousemove", mover);
+            document.addEventListener("mouseup", parar);
+        });
+    </script>
+    
+</body>
+</html>

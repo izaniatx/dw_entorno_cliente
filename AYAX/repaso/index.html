@@ -1,0 +1,118 @@
+<html>
+<head>
+	<title>Ejercicio 3</title>
+</head>
+<body>
+	<h2>Harry Potter API</h2>
+	<div id='type' style="width:500px; border: 2px solid powderblue;">
+		<div>Cargar lista depersonajes:
+		  <button type="button" id="cargar">Datos</button>
+		</div>
+		<br>
+		Personajes: 
+		<select id="selectPersonajes">
+			<option>Carga datos</option>
+		</select>
+	</div>
+	
+	<form name="formulario" style="width:500px; border: 2px solid powderblue;">Datos del personaje seleccionado <br>
+		Species: <input type='text' name="species" disabled>
+		House: <input type='text' name="house" disabled>
+		<br>
+		Male: <input type="radio" id="male" name="gender" value="male" disabled>
+		Female: <input type="radio" id="female" name="gender" value="female" disabled>
+		<br>
+		Date of birth: <input type='text' name="dateOfBirth" disabled>
+		Actor: <input type='text' name="actor" disabled>
+		<br>
+		<img name="foto" style="width:250px;">
+	</form>
+	<script>
+		const button = document.getElementById('cargar');
+		button.addEventListener('click', () => {
+			const select = document.getElementById('selectPersonajes');
+			const selectedCode = select.value;
+
+			getCharacter(selectedCode);
+		})
+
+		function getCharacter(id) {
+			const xhr = new XMLHttpRequest();
+			xhr.open('GET', 'hp_datos.xml', true);
+
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState === xhr.DONE && xhr.status === 200) {
+					const parser = new DOMParser();
+					const xmlDoc = parser.parseFromString(xhr.responseText, 'application/xml');
+
+					const characters = xmlDoc.getElementsByTagName('personaje');
+					for (let i = 0; i < characters.length; i++) {
+						const character = characters[i];
+						const code = character.getElementsByTagName('code')[0].textContent;
+
+						if (code === id) {
+							let finalCharacter = {};
+							finalCharacter.code = code;
+
+							finalCharacter.species = character.getElementsByTagName('species')[0].textContent;
+							finalCharacter.actor = character.getElementsByTagName('actor')[0].textContent;
+							finalCharacter.image = character.getElementsByTagName('image')[0].textContent;
+							finalCharacter.house = character.getElementsByTagName('house')[0].textContent;
+							finalCharacter.gender = character.getElementsByTagName('gender')[0].textContent;
+							finalCharacter.dateOfBirth = character.getElementsByTagName('dateOfBirth')[0].textContent;
+
+							completeForm(finalCharacter); 
+							break;
+
+						}
+					}
+				}
+			}
+			xhr.send();
+		} 
+
+		function completeForm(character) {
+			document.formulario.species.value = character.species;
+			document.formulario.house.value = character.house;
+			document.formulario.dateOfBirth.value = character.dateOfBirth;
+			document.formulario.actor.value = character.actor;
+			document.formulario.foto.src = character.image;
+
+			if (character.gender === 'male') {
+				document.getElementById('male').checked = true;
+			} else if (character.gender === 'female') {
+				document.getElementById('female').checked = true;
+			}
+		}	
+
+		function onLoadCharacters(characters) {
+			const select = document.getElementById('selectPersonajes');
+
+			characters.forEach((character) => {
+				const { name, code } = character;
+				const option = document.createElement('option');
+				option.value = code;
+				option.text = name;
+				select.appendChild(option);
+			})
+		}
+
+		function getCharacters(onLoad) {
+			const xhr = new XMLHttpRequest();
+			xhr.open('GET', 'hp_characters.json', true);
+
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					const { personajes } = JSON.parse(xhr.responseText);
+					onLoad(personajes);
+					
+			};
+		}
+			xhr.send();
+		}
+
+		getCharacters(onLoadCharacters);
+	</script>
+
+</body>
+</html>

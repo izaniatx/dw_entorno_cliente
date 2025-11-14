@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cambiar tamaño</title>
+</head>
+<body>
+    <p>Este texto debe aumentar de tamaño</p>
+    <p>Este texto debe aumentar de tamaño</p>
+    <p>Este texto debe aumentar de tamaño</p>
+
+    <script>
+        const parrafos = document.querySelectorAll("p");
+
+        parrafos.forEach(p => {
+            p.addEventListener("click", function(){
+                let tamañoActual = window.getComputedStyle(this).fontSize;
+                let nuevoTamaño = parseFloat(tamañoActual) + 2;
+                this.style.fontSize = nuevoTamaño + "px";
+            });
+        });
+    </script>
+</body>
+</html>
