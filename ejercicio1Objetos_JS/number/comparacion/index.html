@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparacion</title>
+</head>
+<body>
+    <script>
+        let binario = prompt("Introduce un número BINARIO:");
+        let octal = prompt("Introduce un número OCTAL:");
+        let hexa = prompt("Introduce un número HEXADECIMAL:");
+
+        let decBin = parseInt(binario, 2);
+        let decOct = parseInt(octal, 8);
+        let decHex = parseInt(hexa, 16);
+
+        console.log("\n--- RESULTADOS ---");
+        console.log(`Decimal del binario ${binario} → ${decBin}`);
+        console.log(`Decimal del octal ${octal} → ${decOct}`);
+        console.log(`Decimal del hexadecimal ${hexa} → ${decHex}`);
+
+        let valores = [
+            { nombre: "Binario", valor: decBin },
+            { nombre: "Octal", valor: decOct },
+            { nombre: "Hexadecimal", valor: decHex }
+        ];
+
+        let mayor = valores.reduce((a, b) => a.valor > b.valor ? a : b);
+        let menor = valores.reduce((a, b) => a.valor < b.valor ? a : b);
+
+        console.log(`\nEl número más GRANDE es: ${mayor.nombre} (${mayor.valor})`);
+        console.log(`El número más PEQUEÑO es: ${menor.nombre} (${menor.valor})`);
+    </script> 
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let nombre = prompt("Nombre:").trim();
+        let ap1 = prompt("Primer apellido:").trim();
+        let ap2 = prompt("Segundo apellido (déjalo vacío si no tienes):").trim();
+
+        let usuario;
+
+        if (ap2 === "") {
+            usuario = nombre + ap1;
+        } else {
+            usuario = nombre[0] + ap1 + ap2[0].toUpperCase();
+        }
+
+        let longitudes = nombre.length.toString() + 
+                        ap1.length.toString() + 
+                        (ap2 !== "" ? ap2.length.toString() : "");
+
+        let usuarioFinal = usuario + longitudes;
+
+        console.log("Usuario generado:", usuarioFinal);
+    </script>
+</body>
+</html>
