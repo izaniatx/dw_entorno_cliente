@@ -42,8 +42,8 @@
 
 			xhr.onreadystatechange = function() {
 				if (xhr.readyState === xhr.DONE && xhr.status === 200) {
-					const parser = new DOMParser();
-					const xmlDoc = parser.parseFromString(xhr.responseText, 'application/xml');
+					
+					const xmlDoc =xhr.responseXML;
 
 					const characters = xmlDoc.getElementsByTagName('personaje');
 					for (let i = 0; i < characters.length; i++) {
